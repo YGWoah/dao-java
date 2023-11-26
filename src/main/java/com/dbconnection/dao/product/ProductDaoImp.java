@@ -1,4 +1,4 @@
-package com.dbconnection.dao;
+package com.dbconnection.dao.product;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,12 +7,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.dbconnection.dao.DBSingleton;
 import com.dbconnection.dao.Entities.Product;
 
 /**
  * ProductDaoIimplem
  */
-public class ProductDaoIimplem implements ProductDao {
+public class ProductDaoImp implements ProductDao {
 
     @Override
     public void save(Product t) {
@@ -28,7 +29,7 @@ public class ProductDaoIimplem implements ProductDao {
             preparableStatement.setInt(5, t.getQuantite());
             preparableStatement.executeUpdate();
         } catch (Exception e) {
-            // TODO: handle exception
+            e.printStackTrace();
         }
     }
 
@@ -60,6 +61,7 @@ public class ProductDaoIimplem implements ProductDao {
             preparableStatement.setInt(4, t.getQuantite());
             preparableStatement.setInt(5, t.getId());
             preparableStatement.executeUpdate();
+
         } catch (Exception e) {
             // TODO: handle exception
             e.printStackTrace();
@@ -123,6 +125,35 @@ public class ProductDaoIimplem implements ProductDao {
     public Product searchQuery(String query) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'searchQuery'");
+    }
+
+    @Override
+    public Product searchByname(String name) {
+
+        DBSingleton dbSingleton = DBSingleton.getInstance();
+        Connection connection = dbSingleton.getConnection();
+        try {
+            PreparedStatement preparableStatement = connection
+                    .prepareStatement("SELECT * FROM `product` WHERE `product`.`nom` = ?");
+            preparableStatement.setString(1, name);
+            try {
+                ResultSet resultSet = preparableStatement.executeQuery();
+                System.out.println(resultSet);
+                if (resultSet.next()) {
+                    int productId = resultSet.getInt("id");
+                    String productName = resultSet.getString("nom");
+                    String productDescription = resultSet.getString("description");
+                    int productPrice = resultSet.getInt("prix");
+                    int productQuantity = resultSet.getInt("quantite");
+                    return new Product(productId, productName, productDescription, productPrice, productQuantity);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null; // Return null if no product is found
     }
 
 }
