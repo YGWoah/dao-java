@@ -62,4 +62,10 @@ public class Product {
         this.quantite = quantite;
     }
 
+    @Override
+    public String toString() {
+        return "Product [id=" + id + ", nom=" + nom + ", description=" + description + ", prix=" + prix + ", quantite="
+                + quantite + "]";
+    }
+
 }
