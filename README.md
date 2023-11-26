@@ -33,7 +33,7 @@ This Java project demonstrates the use of JDBC (Java Database Connectivity) and 
 
 2. Open the project in your preferred Java IDE.
 
-3. Modify Database Connection URL: Open the project in your preferred Java IDE and modify the database connection URL in [Database Configuration File](src/com/dbconnection/dao/DBSettings.java) to match your database configuration.
+3. Modify Database Connection URL: Open the project in your preferred Java IDE and modify the database connection URL in [Database Configuration File](src/com/dbconnection/dao/DBSengleton.java) to match your database configuration.
 
 4. Run the Main class to start the console-based menu.
 
